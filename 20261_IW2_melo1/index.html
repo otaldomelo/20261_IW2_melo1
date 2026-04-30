@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Loja de Camisetas</title>
+    <script>
+        $(document).ready(function () {
+            $("#pedidoForm").on('submit', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "insere.php",
+                    type: "POST",
+                    data:
+                    {
+                        consulta: $('consulta').val()
+                    },
+                    success: function (data) {
+                        $('#resultado').html(data);
+                    },
+
+                    error: function () {
+                        $('#resultado').html("Erro no pedido.");
+                    }
+                });
+            })
+        })
+    </script>
+</head>
+
+<body>
+
+    <h2>Preencha o Formulário da Camiseta</h2>
+    <form id="pedidoForm">
+        <input type="text" name="cor" id="cor" placeholder="digite a cor da camiseta" required><br><br>
+        <label for="tamanho">Selecione o tamanho da camiseta:</label>
+        <select name="tamanhp" id="tamanho">
+            <option value="pp">PP</option>
+            <option value="p">P</option>
+            <option value="m">M</option>
+            <option value="g">G</option>
+            <option value="gg">GG</option>
+        </select>
+        <br><br>
+        <button type="submit">Enviar Pedido</button>
+    </form>
+</body>
+
+</html>
