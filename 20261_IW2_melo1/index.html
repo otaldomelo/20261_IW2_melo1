@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
     <title>Loja de Camisetas</title>
     <script>
         $(document).ready(function () {
@@ -32,21 +37,38 @@
 </head>
 
 <body>
+    <div class="container form">
+        <h1>PEDIDO DE CAMISETAS</h1>
+        <p>Preencha o formulário abaixo para efetuar seu pedido</p>
+    </div>
 
-    <h2>Preencha o Formulário da Camiseta</h2>
     <form id="pedidoForm">
-        <input type="text" name="cor" id="cor" placeholder="digite a cor da camiseta" required><br><br>
-        <label for="tamanho">Selecione o tamanho da camiseta:</label>
-        <select name="tamanho" id="tamanho">
-            <option value="pp">PP</option>
-            <option value="p">P</option>
-            <option value="m">M</option>
-            <option value="g">G</option>
-            <option value="gg">GG</option>
-        </select>
-        <br><br>
-        <button type="submit">Enviar Pedido</button>
+        <div class="form-control">
+            <label for="cor">Cor da Camiseta</label>
+            <input type="text" class="form-control" name="cor" id="cor" placeholder="ex: Preto, Vermelho, Branco..."
+                required>
+        </div>
+
+        <div class="form-control"><label for="tamanho">Tamanho da camiseta:</label>
+            <select class="form-select" name="tamanho" id="tamanho" required>
+                <option value="">Selecione um tamanho</option>
+                <option value="pp">PP - Extra Pequeno</option>
+                <option value="p">P - Pequeno</option>
+                <option value="m">M - Médio</option>
+                <option value="g">G - Grande</option>
+                <option value="gg">GG - Extra Grande</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-submit">
+            <span class="spinner-border spinner-border-sm me-2 d-none" id="spinner" role="status"
+                aria-hidden="true"></span>
+            Enviar Pedido
+        </button>
     </form>
+
+    <div id="resultado"></div>
+    </div>
 </body>
 
 </html>
