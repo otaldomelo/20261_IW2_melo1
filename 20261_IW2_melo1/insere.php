@@ -1,9 +1,8 @@
 <?php
 
 include 'conecta.php';
-$tamanho = "G";
-$cor = "azul";
-
+$tamanho = $_POST['tamanho'];
+$cor = $_POST['cor'];
 
 if ($conn->query("INSERT INTO tb_camiseta VALUES (NULL, '".$tamanho."', '".$cor."')")){
     echo "registro efetuado com sucesso";

@@ -21,7 +21,8 @@
                     type: "POST",
                     data:
                     {
-                        consulta: $('consulta').val()
+                        tamanho: $('#tamanho').val(),
+                        cor: $('#cor').val()
                     },
                     success: function (data) {
                         $('#resultado').html(data);
@@ -42,7 +43,7 @@
         <p>Preencha o formulário abaixo para efetuar seu pedido</p>
     </div>
 
-    <form id="pedidoForm">
+    <form id="pedidoForm" action="insere.php" method="post">
         <div class="form-control">
             <label for="cor">Cor da Camiseta</label>
             <input type="text" class="form-control" name="cor" id="cor" placeholder="ex: Preto, Vermelho, Branco..."
@@ -51,7 +52,7 @@
 
         <div class="form-control"><label for="tamanho">Tamanho da camiseta:</label>
             <select class="form-select" name="tamanho" id="tamanho" required>
-                <option value="">Selecione um tamanho</option>
+                <option value="" disabled selected hidden>Selecione um tamanho</option>
                 <option value="pp">PP - Extra Pequeno</option>
                 <option value="p">P - Pequeno</option>
                 <option value="m">M - Médio</option>
