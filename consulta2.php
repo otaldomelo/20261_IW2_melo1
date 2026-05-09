@@ -21,7 +21,6 @@ function inserir($conn, $tamanho, $cor){
         ";
 
     }
-
 }
 
 ?>

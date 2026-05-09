@@ -1,6 +1,7 @@
 <?php
 
 include "conecta.php";
+
 include "consulta2.php";
 
 $tamanho = $_POST['tamanho'];

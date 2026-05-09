@@ -12,4 +12,5 @@ while ($resultado = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 }
 
+
 ?>
