@@ -3,26 +3,25 @@
 include "conecta.php";
 
 function inserir($conn, $tamanho, $cor){
-    $resultado = "";
 
     if ($conn->query("INSERT INTO tb_camiseta VALUES (NULL, '".$tamanho."', '".$cor."')")){
-        echo "registro efetuado com sucesso <br>"; 
 
-        $stmt = $conn->query("SELECT tamanho, cor FROM tb_camiseta"); 
-        while ($row = $stmt->fetchObject()) {
-            $resultado .= "$row->tamanho - $row->cor <br>";
-        }
-
-        echo $resultado;
+        echo "
+            <div class='alert alert-success mt-3'>
+                Registro efetuado com sucesso!
+            </div>
+        ";
 
     } else {
-        echo "registro não efetuado";
+
+        echo "
+            <div class='alert alert-danger mt-3'>
+                Registro não efetuado.
+            </div>
+        ";
+
     }
+
 }
-
-$tamanho = "M";
-$cor = "vermelho";
-
-inserir($conn, $tamanho, $cor);
 
 ?>
