@@ -1,6 +1,5 @@
 <?php
 
-
 $host = 'localhost';
 $db = 'db_camiseta';
 $user = 'root';
@@ -9,7 +8,7 @@ $port = '3307';
 
 try {
 
-    $dsn = "mysql:host=$host;dbname=$db;port=$port";
+    $dsn = "mysql:host=$host;dbname=$db;port=$port;charset=utf8";
 
     $conn = new PDO($dsn, $user, $pass);
 

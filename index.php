@@ -12,49 +12,80 @@
     <link rel="stylesheet" href="style.css">
     <title>Loja de Camisetas</title>
     <script>
+
         $(document).ready(function () {
+
             $("#pedidoForm").on('submit', function (e) {
+
                 e.preventDefault();
 
                 $.ajax({
+
                     url: "insere.php",
+
                     type: "POST",
-                    data:
-                    {
+
+                    data: {
+
                         tamanho: $('#tamanho').val(),
                         cor: $('#cor').val()
+
                     },
+
                     success: function (data) {
+
                         $('#resultado').html(data);
+
                     },
 
                     error: function () {
+
                         $('#resultado').html("Erro no pedido.");
+
                     }
+
                 });
-            })
-        })
+
+            });
+
+        });
+
     </script>
+
 </head>
 
 <body>
+
     <div class="container form">
+
         <h1>PEDIDO DE CAMISETAS</h1>
+
         <p>Preencha o formulário abaixo para efetuar seu pedido!</p>
+
     </div>
 
     <form id="pedidoForm" action="insere.php" method="post">
         <div class="form-control">
             <label for="cor">Cor da Camiseta</label>
-            <input type="text" class="form-control" name="cor" id="cor" placeholder="ex: Preto, Vermelho, Branco..."
+            <input type="text"
+                class="form-control"
+                name="cor"
+                id="cor"
+                placeholder="ex: Preto, Vermelho, Branco..."
                 required>
         </div>
 
         <br>
 
-        <div class="form-control"><label for="tamanho">Tamanho da camiseta:</label>
-            <select class="form-select" name="tamanho" id="tamanho" required>
-                <option value="" disabled selected hidden>Selecione um tamanho</option>
+        <div class="form-control">
+            <label for="tamanho">Tamanho da camiseta:</label>
+            <select class="form-select"
+                name="tamanho"
+                id="tamanho"
+                required>
+                <option value="" disabled selected hidden>
+                    Selecione um tamanho
+                </option>
                 <option value="PP">PP - Extra Pequeno</option>
                 <option value="P">P - Pequeno</option>
                 <option value="M">M - Médio</option>
@@ -66,17 +97,19 @@
         <br>
 
         <button type="submit" class="btn-submit">
-            <span class="spinner-border spinner-border-sm me-2 d-none" id="spinner" role="status"
+            <span class="spinner-border spinner-border-sm me-2 d-none"
+                id="spinner"
+                role="status"
                 aria-hidden="true"></span>
             Enviar Pedido
         </button>
+
         <br><br>
+
     </form>
 
     <div id="resultado"></div>
 
-    </div>
-    
 </body>
 
 </html>

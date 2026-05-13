@@ -6,72 +6,62 @@ function inserir($conn, $tamanho, $cor){
 
     $resultado = "";
 
-    try {
-        // Usando prepared statement para evitar SQL injection
-        $stmt = $conn->prepare("INSERT INTO tb_camiseta VALUES (NULL, :tamanho, :cor)");
-        
-        $stmt->bindParam(':tamanho', $tamanho);
-        $stmt->bindParam(':cor', $cor);
-        
-        if ($stmt->execute()) {
+    $sql = "INSERT INTO tb_camiseta (tamanho, cor)
+            VALUES (:tamanho, :cor)";
 
-            $resultado .= "
-                <div class='alert alert-success'>
-                    Pedido realizado com sucesso!
-                </div>
-            ";
+    $stmtInsert = $conn->prepare($sql);
 
-            $stmt = $conn->query("SELECT tamanho, cor FROM tb_camiseta");
+    if ($stmtInsert->execute([
+        ':tamanho' => $tamanho,
+        ':cor' => $cor
+    ])){
 
-            $resultado .= "
+        $resultado .= "
+            <div class='alert alert-success'>
+                Pedido realizado!
+            </div>
+        ";
 
-                <table class='table table-striped table-bordered mt-3'>
+        $stmt = $conn->query("SELECT tamanho, cor FROM tb_camiseta");
 
-                    <thead class='table-dark'>
+        $resultado .= "
 
-                        <tr>
-                            <th>Tamanho</th>
-                            <th>Cor</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-            ";
-
-            while ($row = $stmt->fetchObject()) {
-
-                $resultado .= "
+            <table class='table table-striped table-bordered mt-3'>
+                <thead class='table-dark'>
                     <tr>
-                        <td>" . htmlspecialchars($row->tamanho) . "</td>
-                        <td>" . htmlspecialchars($row->cor) . "</td>
+                        <th>Tamanho</th>
+                        <th>Cor</th>
                     </tr>
-                ";
+                </thead>
+                <tbody>
+        ";
 
-            }
+        while ($row = $stmt->fetchObject()) {
 
             $resultado .= "
-                    </tbody>
-                </table>
-            ";
-
-            echo $resultado;
-
-        } else {
-
-            echo "
-                <div class='alert alert-danger'>
-                    Registro não efetuado.
-                </div>
+                <tr>
+                    <td>$row->tamanho</td>
+                    <td>$row->cor</td>
+                </tr>
             ";
 
         }
-    } catch(PDOException $erro) {
+
+        $resultado .= "
+                </tbody>
+            </table>
+        ";
+
+        echo $resultado;
+
+    } else {
+
         echo "
             <div class='alert alert-danger'>
-                Erro ao inserir: " . htmlspecialchars($erro->getMessage()) . "
+                Registro não efetuado.
             </div>
         ";
+
     }
 
 }
