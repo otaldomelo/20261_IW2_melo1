@@ -10,7 +10,7 @@ function inserir($conn, $tamanho, $cor){
 
         $resultado .= "
             <div class='alert alert-success'>
-                Pedido realizado com sucesso!
+                Pedido realizado!
             </div>
         ";
 
