@@ -20,11 +20,8 @@
                 e.preventDefault();
 
                 $.ajax({
-
                     url: "insere.php",
-
                     type: "POST",
-
                     data: {
 
                         tamanho: $('#tamanho').val(),
@@ -48,6 +45,26 @@
 
             });
 
+            $('excluir').click(function() {
+                var id = $(this).attr('id');
+            
+                $.ajax({
+                    url: "apaga.php",
+                    type: "POST",
+                    data: "id="+id,
+                    dataType: "html"
+
+                    }).done(function(resposta) {
+                    console.log(resposta);
+
+                    }).fail(function(jqXHR, textStatus ) {
+                    console.log("Request failed: " + textStatus);
+
+                    }).always(function() {
+                    console.log("completou");
+                });
+            });
+            
         });
 
     </script>

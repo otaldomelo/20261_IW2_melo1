@@ -22,13 +22,14 @@ function inserir($conn, $tamanho, $cor){
             </div>
         ";
 
-        $stmt = $conn->query("SELECT tamanho, cor FROM tb_camiseta");
+        $stmt = $conn->query("SELECT codigo, tamanho, cor FROM tb_camiseta");
 
         $resultado .= "
 
             <table class='table table-striped table-bordered mt-3'>
                 <thead class='table-dark'>
                     <tr>
+                        <th>Código</th>
                         <th>Tamanho</th>
                         <th>Cor</th>
                     </tr>
@@ -40,8 +41,14 @@ function inserir($conn, $tamanho, $cor){
 
             $resultado .= "
                 <tr>
+                    <td>$row->codigo</td>
                     <td>$row->tamanho</td>
                     <td>$row->cor</td>
+                    <td>
+                        <button class='excluir' id='".$row->codigo."'>
+                            Excluir
+                        </button>
+                    </td>
                 </tr>
             ";
 
