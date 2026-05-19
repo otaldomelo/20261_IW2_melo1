@@ -1,14 +1,15 @@
 <?php
 
 include 'conecta.php';
-include 'consulta2.php';
-
 $id = $_POST['id'];
-$sql = "DELETE FROM tb_camiseta WHERE codigo = '".$id."'";
-if($pdo->query(sql)){
-    consultar();
-} else {
+
+$sql = "DELETE FROM tb_camiseta
+        WHERE codigo = '".$id."'";
+if($conn->query($sql)){
+    echo "success";
+}else{
     echo "erro";
+
 }
 
-php>
+?>

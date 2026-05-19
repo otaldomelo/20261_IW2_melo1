@@ -13,61 +13,61 @@
     <title>Loja de Camisetas</title>
     <script>
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $("#pedidoForm").on('submit', function (e) {
+        excluir();
 
-                e.preventDefault();
+        $("#pedidoForm").on('submit', function (e) {
 
-                $.ajax({
-                    url: "insere.php",
-                    type: "POST",
-                    data: {
+            e.preventDefault();
 
-                        tamanho: $('#tamanho').val(),
-                        cor: $('#cor').val()
+            $.ajax({
 
-                    },
+                url: "insere.php",
+                type: "POST",
+                data: {
+                    tamanho: $('#tamanho').val(),
+                    cor: $('#cor').val()
+                },
 
-                    success: function (data) {
+                success: function (data) {
+                    $('#resultado').html(data);
+                    excluir();
+                },
 
-                        $('#resultado').html(data);
+                error: function () {
+                    $('#resultado').html("Erro no pedido.");
 
-                    },
-
-                    error: function () {
-
-                        $('#resultado').html("Erro no pedido.");
-
-                    }
-
-                });
-
+                }
             });
-
-            $('excluir').click(function() {
-                var id = $(this).attr('id');
-            
-                $.ajax({
-                    url: "apaga.php",
-                    type: "POST",
-                    data: "id="+id,
-                    dataType: "html"
-
-                    }).done(function(resposta) {
-                    console.log(resposta);
-
-                    }).fail(function(jqXHR, textStatus ) {
-                    console.log("Request failed: " + textStatus);
-
-                    }).always(function() {
-                    console.log("completou");
-                });
-            });
-            
         });
+    });
 
-    </script>
+    function excluir(){
+        $('.excluir').click(function(){
+            var id = $(this).attr('id');
+
+            $.ajax({
+
+                url: "apaga.php",
+                type: "POST",
+                data: "id=" + id,
+                dataType: "html"
+
+            }).done(function(resposta){
+                console.log(resposta);
+                location.reload();
+
+            }).fail(function(jqXHR, textStatus){
+                console.log("Request failed: " + textStatus);
+
+            }).always(function(){
+                console.log("completou");
+            });
+        });
+    }
+
+</script>
 
 </head>
 
