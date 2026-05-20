@@ -46,6 +46,7 @@
     function excluir(){
         $('.excluir').click(function(){
             var id = $(this).attr('id');
+            var $botao = $(this);
 
             $.ajax({
 
@@ -56,10 +57,14 @@
 
             }).done(function(resposta){
                 console.log(resposta);
-                location.reload();
+                // Remove a linha da tabela sem recarregar a página
+                $botao.closest('tr').fadeOut(300, function() {
+                    $(this).remove();
+                });
 
             }).fail(function(jqXHR, textStatus){
                 console.log("Request failed: " + textStatus);
+                alert("Erro ao excluir o pedido!");
 
             }).always(function(){
                 console.log("completou");
