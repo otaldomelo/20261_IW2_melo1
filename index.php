@@ -43,7 +43,7 @@
     });
 
     function excluir(){
-        $('.excluir').click(function(){
+        $('.excluir').on('click', function(){
             var id = $(this).attr('id');
             var $botao = $(this);
 
