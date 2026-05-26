@@ -243,12 +243,9 @@
 <!--a função não tá funcionando, resolve depois-->
         <?php
 
-        include "consulta.php";
+        include "consulta2.php";
 
         ?>
-        
-    </div>
-
 
 </body>
 
