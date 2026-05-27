@@ -3,12 +3,22 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include "conecta.php";
-include "consulta2.php";
+include 'conecta.php';
+include 'consulta.php';
 
-$tamanho = $_POST['tamanho'];
 $cor = $_POST['cor'];
+$tamanho = $_POST['tamanho'];
+$sql = ("INSERT INTO tb_camiseta
+VALUES (
+null,
+'".$tamanho."',
+'".$cor."'
+)");
 
-inserir($conn, $tamanho, $cor);
+if($conn->query($sql)){
+    consulta();
+} else {
+    echo "não inseriu";
+}
 
 ?>

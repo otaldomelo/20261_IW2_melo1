@@ -1,23 +1,14 @@
 <?php
-
-$host = 'localhost';
-$db = 'db_camiseta';
-$user = 'root';
-$pass = 'usbw';
-$port = '3307';
+  $username = 'root';
+  $password = 'usbw';
 
 try {
-
-    $dsn = "mysql:host=$host;dbname=$db;port=$port;charset=utf8";
-
-    $conn = new PDO($dsn, $user, $pass);
-
+  $conn = new PDO('mysql:host=localhost;dbname=db_camiseta;port=3307', $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch(PDOException $erro){
-
-    echo "Erro na conexão: " . $erro->getMessage();
-
+} catch(PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
 }
 
+
+// string com comando mysql, armazena string em uma variavel, executa
 ?>
