@@ -1,29 +1,14 @@
 <?php
 
 function consulta (){
-
 include "conecta.php";
-
-$stmt = $conn->query("
-SELECT
-    c.codigo,
-    co.cor,
-    t.tamanho
-FROM tb_camiseta c
-INNER JOIN tb_cor co
-    ON c.id_cor = co.id_cor
-INNER JOIN tb_tamanho t
-    ON c.id_tamanho = t.id_tamanho
-ORDER BY c.codigo ASC
-");
-
+$stmt = $conn->query("SELECT * FROM tb_camiseta");
 while ($row = $stmt->fetch()) {
 
 ?>
 
 <div class="card" style="width: 18rem;" data-id="<?php echo $row['codigo']; ?>">
   <div class="card-body">
-
 <?php
 
 echo "
@@ -37,7 +22,6 @@ echo '
 data-id="'.$row['codigo'].'">
 Apagar
 </button>
-
 <button class="edit-button btn botao-registro">
 Editar
 </button>
@@ -47,7 +31,6 @@ Editar
 
     </div>
 </div>
-
 <?php
 }
 }

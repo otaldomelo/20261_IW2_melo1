@@ -11,117 +11,120 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
+    <script>
 
-$(document).ready(function () {
+        $(document).ready(function () {
 
-    let cor, tamanho, id;
+            let cor, tamanho, id
 
-    $("#confirma").click(function () {
-        cor = $(".cor").val();
-        tamanho = $(".tamanho").val();
+            $("#confirma").click(function () {
+                cor = $(".cor").val();
+                tamanho = $(".tamanho").val();
+                var formData = new FormData()
+                formData.append("cor", cor)
+                formData.append("tamanho", tamanho)
 
-        $.ajax({
+                $.ajax({
 
-            url: 'insere.php',
-            type: 'POST',
-            data: {
-                id_cor: cor,
-                id_tamanho: tamanho
-            },
+                    url: 'insere.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
 
-            success: function (response) {
-                alert('Pedido cadastrado com sucesso!');
-                $("#lista-cards").html(response);
-                $("#modalCadastro").modal("hide");
-                $(".cor").val("1");
-                $(".tamanho").val("1");
+                    success: function (response) {
+                        alert('Pedido cadastrado com sucesso!')
+                        $("#lista-cards").html(response);
+                        $("#modalCadastro").modal("hide");
+                        $(".cor").val("")
+                        $(".tamanho").val("PP")
 
-            },
+                    },
 
-            error: function () {
-                alert('Erro ao cadastrar pedido.');
-            }
+                    error: function () {
+                        alert('Erro ao cadastrar pedido.')
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete-button', function () {
+                let id = $(this).data('id');
+                $.ajax({
+                    url: "apaga.php",
+                    method: "POST",
+                    data: { id: id },
+                    dataType: "html",
+                    success: function (response) {
+                        if (response === 'success') {
+                            alert('Registro apagado com êxito.');
+                            $('[data-id="' + id + '"]').closest('.card').remove();
+                        } else {
+                            alert('Erro ao apagar o registro.')
+                        }
+
+                    },
+
+                    error: function () {
+                        alert('Erro na comunicação com o servidor')
+                    }
+                });
+            });
+
+            let editingCard = null
+
+            $(document).on('click', '.edit-button', function () {
+
+                editingCard = $(this).closest(".card")
+
+                let id = editingCard.data("id")
+                let cor = editingCard.find(".cor").text()
+                let tamanho = editingCard.find(".tamanho").text()
+
+                $(".editaCor").val(cor)
+                $(".editaTamanho").val(tamanho)
+                $("#modalEdita").data("id", id)
+                $("#modalEdita").modal("show")
+            });
+
+            $(document).on('click', '.save-button', function () {
+                id = $("#modalEdita").data("id")
+                cor = $(".editaCor").val()
+                tamanho = $(".editaTamanho").val()
+                var formData = new FormData()
+                formData.append("cor", cor)
+                formData.append("tamanho", tamanho)
+                formData.append("id", id)
+
+                $.ajax({
+                    url: 'edita.php',
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (resposta) {
+
+                        alert(resposta)
+                        if (editingCard) {
+                            editingCard.find(".cor").text(cor)
+                            editingCard.find(".tamanho").text(tamanho)
+                        }
+
+                        document.activeElement.blur();
+                        $("#modalEdita").modal("hide");
+
+                        editingCard = null
+
+                    },
+
+                    error: function () {
+
+                        alert("Erro ao atualizar pedido.")
+                    }
+                });
+            })
         });
-    });
 
-    $(document).on('click', '.delete-button', function () {
-
-        let id = $(this).data('id');
-        $.ajax({
-
-            url: "apaga.php",
-            method: "POST",
-            data: {
-                id: id
-            },
-            dataType: "html",
-
-            success: function (response) {
-                if (response === 'success') {
-
-                    alert('Registro apagado com êxito.');
-                    $('[data-id="' + id + '"]').closest('.card').remove();
-
-                } else {
-
-                    alert('Erro ao apagar o registro.');
-
-                }
-
-            },
-
-            error: function () {
-
-                alert('Erro na comunicação com o servidor');
-
-            }
-        });
-    });
-
-    let editingCard = null;
-
-    $(document).on('click', '.edit-button', function () {
-
-        editingCard = $(this).closest(".card");
-        let id = editingCard.data("id");
-        $("#modalEdita").data("id", id);
-        $("#modalEdita").modal("show");
-
-    });
-
-    $(document).on('click', '.save-button', function () {
-
-        id = $("#modalEdita").data("id");
-        cor = $(".editaCor").val();
-        tamanho = $(".editaTamanho").val();
-
-        $.ajax({
-            url: 'edita.php',
-            type: "POST",
-            data: {
-
-                id_cor: cor,
-                id_tamanho: tamanho,
-                id: id
-            },
-
-            success: function (resposta) {
-                alert(resposta);
-                location.reload();
-
-            },
-
-            error: function () {
-
-                alert("Erro ao atualizar pedido.");
-
-            }
-        });
-    });
-});
-
-</script>
+    </script>
 
 </head>
 
@@ -159,29 +162,22 @@ $(document).ready(function () {
 
   
                         <h2>Cor:</h2>
-                        <select class="cor entrada-texto" required>
-                            <option value="1">Preto</option>
-                            <option value="2">Branco</option>
-                            <option value="3">Azul</option>
-                            <option value="4">Vermelho</option>
-                            <option value="5">Laranja</option>
-                            <option value="6">Amarelo</option>
-                            <option value="7">Ciano</option>
-                            <option value="8">Verde</option>
-                            <option value="9">Marrom</option>
-                            <option value="10">Cinza</option>
-                        </select>
+
+                        <input type="text"
+                            class="cor entrada-texto"
+                            placeholder="Ex: Preto, Branco..."
+                            required>
 
                         <br><br>
 
                         <h2>Tamanho:</h2>
 
                         <select class="tamanho entrada-texto" required>
-                            <option value="1">PP</option>
-                            <option value="2">P</option>
-                            <option value="3">M</option>
-                            <option value="4">G</option>
-                            <option value="5">GG</option>
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
                         </select>
                 </div>
                 <div class="modal-footer modal-inferior">
@@ -194,70 +190,48 @@ $(document).ready(function () {
         </div>
     </div>
 
-<!--coisinho de editar-->
+ <!--coisinho de editar-->
 
-<div class="modal" id="modalEdita">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal" id="modalEdita">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header modal-superior">
+                    <h4 class="modal-title">
+                        Editar Pedido
+                    </h4>
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
 
-            <div class="modal-header modal-superior">
-                <h4 class="modal-title">
-                    Editar Pedido
-                </h4>
+                </div>
 
-                <button type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"></button>
+                <div class="modal-body modal-interior">
+                        <h2>Cor:</h2>
 
+                        <input type="text"
+                            class="editaCor entrada-texto">
+
+                        <br><br>
+
+                        <h2>Tamanho:</h2>
+                        <select class="editaTamanho entrada-texto">
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
+                        </select>
+                </div>
+
+                <div class="modal-footer modal-inferior">
+                    <button type="button"
+                        class="btn save-button">
+                        Salvar
+                    </button>
+                </div>
             </div>
-
-            <div class="modal-body modal-interior">
-
-                <h2>Cor:</h2>
-
-                <select class="editaCor entrada-texto">
-
-                    <option value="1">Preto</option>
-                    <option value="2">Branco</option>
-                    <option value="3">Azul</option>
-                    <option value="4">Vermelho</option>
-                    <option value="5">Laranja</option>
-                    <option value="6">Amarelo</option>
-                    <option value="7">Ciano</option>
-                    <option value="8">Verde</option>
-                    <option value="9">Marrom</option>
-                    <option value="10">Cinza</option>
-
-                </select>
-
-                <br><br>
-
-                <h2>Tamanho:</h2>
-
-                <select class="editaTamanho entrada-texto">
-
-                    <option value="1">PP</option>
-                    <option value="2">P</option>
-                    <option value="3">M</option>
-                    <option value="4">G</option>
-                    <option value="5">GG</option>
-
-                </select>
-
-            </div>
-
-            <div class="modal-footer modal-inferior">
-
-                <button type="button"
-                    class="btn save-button">
-                    Salvar
-                </button>
-
-            </div>
-
         </div>
     </div>
-</div>
     <div id="lista-cards" class="d-flex flex-wrap gap-3">
 
         <?php
