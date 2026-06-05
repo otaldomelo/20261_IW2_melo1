@@ -3,17 +3,18 @@
 include "conecta.php";
 
 $id = $_POST['id'];
-$cor = $_POST['cor'];
-$tamanho = $_POST['tamanho'];
+$id_cor = $_POST['id_cor'];
+$id_tamanho = $_POST['id_tamanho'];
 
 $sql = "UPDATE tb_camiseta
-        SET cor=?, tamanho=?
+        SET id_cor=?, id_tamanho=?
         WHERE codigo=?";
 
 $stmt = $conn->prepare($sql);
+
 $ok = $stmt->execute([
-    $cor,
-    $tamanho,
+    $id_cor,
+    $id_tamanho,
     $id
 ]);
 

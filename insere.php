@@ -6,14 +6,17 @@ ini_set('display_errors', 1);
 include 'conecta.php';
 include 'consulta.php';
 
-$cor = $_POST['cor'];
-$tamanho = $_POST['tamanho'];
-$sql = ("INSERT INTO tb_camiseta
-VALUES (
-null,
-'".$tamanho."',
-'".$cor."'
-)");
+$id_cor = $_POST['id_cor'];
+$id_tamanho = $_POST['id_tamanho'];
+
+$sql = "
+INSERT INTO tb_camiseta
+(id_tamanho, id_cor)
+VALUES
+(
+'$id_tamanho',
+'$id_cor'
+)";
 
 if($conn->query($sql)){
     consulta();
