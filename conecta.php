@@ -8,7 +8,5 @@ try {
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
-
-
 // string com comando mysql, armazena string em uma variavel, executa
 ?>

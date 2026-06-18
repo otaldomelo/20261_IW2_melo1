@@ -72,7 +72,6 @@ $(document).ready(function () {
             },
 
             error: function () {
-
                 alert('Erro na comunicação com o servidor');
 
             }
@@ -99,6 +98,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'edita.php',
             type: "POST",
+            dataType: "json",
             data: {
 
                 id_cor: cor,
@@ -107,7 +107,7 @@ $(document).ready(function () {
             },
 
             success: function (resposta) {
-                alert(resposta);
+                alert(resposta.message);
                 location.reload();
 
             },
@@ -216,7 +216,6 @@ $(document).ready(function () {
                 <h2>Cor:</h2>
 
                 <select class="editaCor entrada-texto">
-
                     <option value="1">Preto</option>
                     <option value="2">Branco</option>
                     <option value="3">Azul</option>
@@ -227,7 +226,6 @@ $(document).ready(function () {
                     <option value="8">Verde</option>
                     <option value="9">Marrom</option>
                     <option value="10">Cinza</option>
-
                 </select>
 
                 <br><br>
@@ -235,13 +233,11 @@ $(document).ready(function () {
                 <h2>Tamanho:</h2>
 
                 <select class="editaTamanho entrada-texto">
-
                     <option value="1">PP</option>
                     <option value="2">P</option>
                     <option value="3">M</option>
                     <option value="4">G</option>
                     <option value="5">GG</option>
-
                 </select>
 
             </div>
