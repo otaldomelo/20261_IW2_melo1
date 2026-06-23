@@ -22,3 +22,4 @@ if ($row) {
 } else {
     echo json_encode(['error' => 'Registro não encontrado']);
 }
+?>
